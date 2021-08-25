@@ -1,0 +1,30 @@
+{
+  "name": "eleventy-shopify",
+  "version": "0.0.1",
+  "description": "An eleventy plugin to pull in Shopify Data",
+  "main": ".eleventy.js",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dleatherman/eleventy-shopify.git"
+  },
+  "keywords": [
+    "11ty",
+    "11ty-plugin",
+    "eleventy",
+    "eleventy-plugin"
+  ],
+  "author": "Dan Leatherman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dleatherman/eleventy-shopify/issues"
+  },
+  "homepage": "https://github.com/dleatherman/eleventy-shopify#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.12.1"
+  }
+}
