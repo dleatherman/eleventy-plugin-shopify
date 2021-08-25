@@ -1,3 +1,3 @@
-module.exports = (eleventyConfig, options) => {
+module.exports = (eleventyConfig, options = {}) => {
 
 };
