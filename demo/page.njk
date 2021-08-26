@@ -1,0 +1,12 @@
+---
+layout: base.njk
+pagination:
+  data: shopify.pages
+  size: 1
+  alias: shopifypage
+permalink: "/{{ shopifypage.url }}/"
+---
+
+<h1>{{ shopifypage.title }}</h1>
+
+{{ shopifypage.body | safe }}

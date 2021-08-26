@@ -1,0 +1,26 @@
+---
+layout: base.njk
+eleventyComputed:
+  title: "{{ collection.title }}"
+pagination:
+  data: shopify.collections
+  size: 1
+  alias: collection
+permalink: "/{{ collection.handle }}/"
+---
+
+<h1>{{ collection.title }}</h1>
+
+<p>{{ collection.descriptionHtml | safe }}</p>
+
+{% if collection.image %}
+  <img src="{{ collection.image.originalSrc }}" alt="{{ collection.image.altText }}">
+{% endif %}
+
+{% if collection.products.length > 0 %}
+<ul>
+  {%- for product in collection.products %}
+    <li><a href="/{{ product.handle }}/">{{ product.title }}</a></li>
+  {%- endfor %}
+</ul>
+{% endif %}

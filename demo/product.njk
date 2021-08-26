@@ -1,0 +1,27 @@
+---
+layout: base.njk
+eleventyComputed:
+  title: "{{ product.title }}"
+pagination:
+  data: shopify.products
+  size: 1
+  alias: product
+permalink: "/{{ product.handle }}/"
+---
+
+
+{% if product.images.edges.length > 0 %}
+  {%- for thumbnail in product.images.edges %}
+    <img src="{{thumbnail.node.originalSrc}}" alt="{{ thumbnail.node.alt }}">
+  {%- endfor %}
+{% endif %}
+
+<h1>{{ product.title }}</h1>
+
+{% if product.priceRange.minVariantPrice.amount === product.priceRange.maxVariantPrice.amount %}
+Price {{ product.priceRange.minVariantPrice.amount | formatCurrency }}
+{% else %}
+Price from: {{ product.priceRange.minVariantPrice.amount | formatCurrency }} - {{ product.priceRange.maxVariantPrice.amount | formatCurrency }}
+{% endif %}
+
+{{ product.descriptionHtml | safe }}
