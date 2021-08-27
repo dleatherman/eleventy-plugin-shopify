@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dleatherman/eleventy-shopify.git"
+    "url": "git+https://github.com/dleatherman/eleventy-plugin-shopify.git"
   },
   "keywords": [
     "11ty",
@@ -21,9 +21,9 @@
   "author": "Dan Leatherman",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dleatherman/eleventy-shopify/issues"
+    "url": "https://github.com/dleatherman/eleventy-plugin-shopify/issues"
   },
-  "homepage": "https://github.com/dleatherman/eleventy-shopify#readme",
+  "homepage": "https://github.com/dleatherman/eleventy-plugin-shopify#readme",
   "devDependencies": {
     "@11ty/eleventy": "^1.0.0-canary",
     "chalk": "^4.1.2",
