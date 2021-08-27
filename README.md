@@ -4,6 +4,8 @@ Import your [Shopify](https://www.shopify.com/?ref=permalight-nyc) products, pag
 
 _Note: This plugin currently uses a development version of Eleventy which includes [`addGlobalData()`](https://www.11ty.dev/docs/data-global-custom/), tread carefully_
 
+[View the demo site](https://eleventy-plugin-shopify-demo.netlify.app/)
+
 ## Installation
 
 1. Install plugin using npm:
