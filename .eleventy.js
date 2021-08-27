@@ -1,9 +1,20 @@
 const chalk = require('chalk');
 const fetch = require('node-fetch-cache');
 
+const shopQuery = `
+query {
+  shop {
+    name
+    primaryDomain {
+      url
+    }
+  }
+}
+`
+
 const productsQuery = `
 query {
-  products(first: 10) {
+  products(first: 100, sortKey: CREATED_AT) {
     edges {
       node {
         id
@@ -12,7 +23,6 @@ query {
         descriptionHtml
         productType
         tags
-        updatedAt
         priceRange {
           minVariantPrice {
             amount
@@ -21,25 +31,15 @@ query {
             amount
           }
         }
-        totalInventory
-        variants(sortKey:POSITION, first: 5) {
+        variants(sortKey: POSITION, first: 100) {
           edges {
             node {
               id
               title
-              availableForSale
-              quantityAvailable
-              priceV2 {
-                amount
+              selectedOptions {
+                name
+                value
               }
-            }
-          }
-        }
-        images(first: 10) {
-          edges {
-            node {
-              altText
-              originalSrc
             }
           }
         }
@@ -51,37 +51,40 @@ query {
 
 const collectionsQuery = `
 query {
-  collections(first:5) {
+  collections(first:100) {
     edges {
       node {
-        id
         title
         handle
-        descriptionHtml
         handle
-        image {
-          id
-          originalSrc
-          altText
-        }
-        products(first: 50) {
+        descriptionHtml
+        products(first: 100) {
           edges {
             node {
               id
               title
               handle
+              descriptionHtml
               productType
-              images(first: 1) {
-                edges {
-                  node {
-                    altText
-                    originalSrc
-                  }
-                }
-              }
+              tags
               priceRange {
                 minVariantPrice {
                   amount
+                }
+                maxVariantPrice {
+                  amount
+                }
+              }
+              variants(sortKey: POSITION, first: 100) {
+                edges {
+                  node {
+                    id
+                    title
+                    selectedOptions {
+                      name
+                      value
+                    }
+                  }
                 }
               }
             }
@@ -139,6 +142,28 @@ query {
   }
 }
 `
+
+const getShopInfo = async ({ url, key, version, shopQuery }) => {
+
+  console.log(chalk.yellow.bold('SHOPIFY:GETTING SHOP INFO'))
+
+  const endpoint = `https://${url}/api/${version}/graphql.json`
+
+  const response = await fetch(endpoint, {
+    method: 'post',
+    body: shopQuery,
+    headers: {
+      'X-Shopify-Storefront-Access-Token': key,
+      'Content-Type': 'application/graphql'
+    },
+  })
+  const res = await response.json()
+  const shop = res.data.shop
+
+  console.log(chalk.greenBright.bold(`SHOPIFY:RECIEVED SHOP INFO`))
+  return shop
+
+}
 
 const getProducts = async ({ url, key, version, productsQuery }) => {
 
@@ -244,6 +269,7 @@ const getArticles = async ({ url, key, version, articlesQuery }) => {
 
 const getContent = async (params) => {
   return {
+    shop: await getShopInfo(params),
     products: await getProducts(params),
     collections: await getCollections(params),
     pages: await getPages(params),
@@ -266,6 +292,7 @@ module.exports = (
         url: options.url,
         key: options.key,
         version: options.version,
+        shopQuery: options.shopQuery ? options.shopQuery : shopQuery,
         productsQuery: options.productsQuery ? options.productsQuery : productsQuery,
         collectionsQuery: options.collectionsQuery ? options.collectionsQuery : collectionsQuery,
         pagesQuery: options.pagesQuery ? options.pagesQuery : pagesQuery,
@@ -276,4 +303,8 @@ module.exports = (
   eleventyConfig.addFilter('formatCurrency', price => {
     return `$${Number.parseFloat(price).toFixed(2)}`;
   });
+
+  eleventyConfig.addFilter('decodeId', id => {
+    return parseInt(atob(id).split('/').pop())
+  })
 };

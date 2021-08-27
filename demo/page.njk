@@ -3,10 +3,10 @@ layout: base.njk
 pagination:
   data: shopify.pages
   size: 1
-  alias: shopifypage
-permalink: "/{{ shopifypage.url }}/"
+  alias: spage
+permalink: "/{{ spage.handle }}/"
 ---
 
-<h1>{{ shopifypage.title }}</h1>
+<h1>{{ spage.title }}</h1>
 
-{{ shopifypage.body | safe }}
+{{ spage.body | safe }}

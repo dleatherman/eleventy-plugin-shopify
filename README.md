@@ -14,10 +14,13 @@ _Note: This plugin currently uses a development version of Eleventy which includ
 
 2. Add plugin to your `.eleventy.js` config, ensuring to add your Shopify url and a Storefront API key. Check out the Shopify docs for [how to create a Storefront API key](https://shopify.dev/api/storefront/getting-started):
 
+   You may also pass through your own graphql queries for products, collections, pages, and articles. Check out the [graphiql storefront explorer](https://shopify.dev/custom-storefronts/tools/graphiql-storefront-api) to test queries. You may have to adjust the queries based on cost and size of the store.
+
    ```js
    const pluginShopify = require("eleventy-plugin-shopify");
 
    require("dotenv").config();
+
    const { SHOPIFY_STORE_URL, SHOPIFY_ACCESS_TOKEN, SHOPIFY_API_VERSION } = process.env;
 
    module.exports = (eleventyConfig) => {
@@ -25,6 +28,7 @@ _Note: This plugin currently uses a development version of Eleventy which includ
        url: SHOPIFY_STORE_URL,
        key: SHOPIFY_ACCESS_TOKEN,
        version: SHOPIFY_API_VERSION,
+       // optional: productsQuery, collectionsQuery, pagesQuery, articlesQuery
      });
    };
    ```
@@ -74,3 +78,7 @@ _Note: This plugin currently uses a development version of Eleventy which includ
    ```text
    npm run dev
    ```
+
+# Gotchas
+
+Beware of the `page` keyword when adding a layout for your shopify pages. In the demo we've called this `spage`

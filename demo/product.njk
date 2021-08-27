@@ -25,3 +25,22 @@ Price from: {{ product.priceRange.minVariantPrice.amount | formatCurrency }} - {
 {% endif %}
 
 {{ product.descriptionHtml | safe }}
+
+<hr>
+
+{% if product.variants.edges %}
+  <ul>
+  {%- for variant in product.variants.edges %}
+    <li>
+      <a href="{{ shopify.shop.primaryDomain.url }}/cart/{{ variant.node.id | decodeId }}:1?channel=buy_button">
+        Buy
+        {% for option in variant.node.selectedOptions %}
+          {{ option.name }}: {{ option.value }}{% if loop.index == variant.node.selectedOptions | length %}{% else %} / {% endif %}
+        {% endfor %}
+      </a>
+    </li>
+  {%- endfor %}
+  </ul>
+{% else %}
+  <a href="{{shopify.shop.primaryDomain.url}}/cart/{{ product.variants.edges[0].node.id | decodeId }}:1?channel=buy_button">Buy {{ product.title }}</a>
+{% endif %}
