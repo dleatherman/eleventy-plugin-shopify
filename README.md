@@ -28,7 +28,7 @@ _Note: This plugin currently uses a development version of Eleventy which includ
        url: SHOPIFY_STORE_URL,
        key: SHOPIFY_ACCESS_TOKEN,
        version: SHOPIFY_API_VERSION,
-       // optional: productsQuery, collectionsQuery, pagesQuery, articlesQuery
+       // optional: shopQuery, productsQuery, collectionsQuery, pagesQuery, articlesQuery
      });
    };
    ```
@@ -45,6 +45,7 @@ _Note: This plugin currently uses a development version of Eleventy which includ
 
 ## API
 
+- `shopify.shop`: A tool for accessing the shop name and URL
 - `shopify.products`: An array of all products in Shopify
 - `shopify.articles`: An array of all articles in Shopify
 - `shopify.pages`: An array of all pages in Shopify
