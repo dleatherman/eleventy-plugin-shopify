@@ -23,12 +23,15 @@ query {
         descriptionHtml
         productType
         tags
+        totalInventory
         priceRange {
           minVariantPrice {
             amount
+            currencyCode
           }
           maxVariantPrice {
             amount
+            currencyCode
           }
         }
         variants(sortKey: POSITION, first: 100) {
@@ -36,9 +39,10 @@ query {
             node {
               id
               title
-              selectedOptions {
-                name
-                value
+              quantityAvailable
+              priceV2 {
+                amount
+                currencyCode
               }
             }
           }

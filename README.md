@@ -55,6 +55,8 @@ _Note: This plugin currently uses a development version of Eleventy which includ
 - `shopify.pages`: An array of all pages in Shopify
 - `shopify.collections`: An array of all collections in Shopify
 
+This plugin comes with a `formatCurrency` filter as well as a `decodeId` filter.
+
 ## Development
 
 1. Create a `.env` file inside of `demo` with the following credentials:

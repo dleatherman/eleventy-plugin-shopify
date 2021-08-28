@@ -9,38 +9,30 @@ pagination:
 permalink: "/{{ product.handle }}/"
 ---
 
-
-{% if product.images.edges.length > 0 %}
-  {%- for thumbnail in product.images.edges %}
-    <img src="{{thumbnail.node.originalSrc}}" alt="{{ thumbnail.node.alt }}">
-  {%- endfor %}
-{% endif %}
-
 <h1>{{ product.title }}</h1>
 
-{% if product.priceRange.minVariantPrice.amount === product.priceRange.maxVariantPrice.amount %}
-Price {{ product.priceRange.minVariantPrice.amount | formatCurrency }}
-{% else %}
-Price from: {{ product.priceRange.minVariantPrice.amount | formatCurrency }} - {{ product.priceRange.maxVariantPrice.amount | formatCurrency }}
-{% endif %}
+<p>{{ product.descriptionHtml | safe }}</p>
 
-{{ product.descriptionHtml | safe }}
-
-<hr>
-
-{% if product.variants.edges %}
-  <ul>
-  {%- for variant in product.variants.edges %}
-    <li>
-      <a href="{{ shopify.shop.primaryDomain.url }}/cart/{{ variant.node.id | decodeId }}:1?channel=buy_button">
-        Buy
-        {% for option in variant.node.selectedOptions %}
-          {{ option.name }}: {{ option.value }}{% if loop.index == variant.node.selectedOptions | length %}{% else %} / {% endif %}
-        {% endfor %}
-      </a>
-    </li>
-  {%- endfor %}
-  </ul>
-{% else %}
-  <a href="{{shopify.shop.primaryDomain.url}}/cart/{{ product.variants.edges[0].node.id | decodeId }}:1?channel=buy_button">Buy {{ product.title }}</a>
-{% endif %}
+<form class="addToCart">
+  <input type="hidden" name="cartId" value="" />
+  <div class="product-page-price-list">
+    {% if (product.variants.edges.length > 1) %}
+      {% for variant in product.variants.edges %}
+        <div>
+          <input id="{{ variant.node.id }}" type="radio" name="merchandiseId" value="{{ variant.node.id }}"{% if loop.index0 == 0 %} checked{% endif %}>
+          <label for="{{ variant.node.id }}">
+            {{ variant.node.title }} - {{ variant.node.priceV2.amount }} {{ variant.node.priceV2.currencyCode }}
+          </label>
+        </div>
+      {% endfor %}
+    {% else %}
+      {{ product.variants.edges[0].node.priceV2.currencyCode }} {{ product.variants.edges[0].node.priceV2.amount }}
+      <input type="hidden" name="merchandiseId" value="{{ product.variants.edges[0].node.id }}" >
+    {% endif %}
+    
+    <div class="product-page-quantity-row">
+      <input type="number" name="quantity" value="1" min="0" max="10" class="product-page-quantity-input">
+      <button type="submit" class="button purchase">Add to Cart</button>
+    </div>
+  </div>
+</form>

@@ -1,6 +1,6 @@
-// const pluginShopify = require("../"); // For local development
+const pluginShopify = require("../"); // For local development
 
-const pluginShopify = require("eleventy-plugin-shopify");
+// const pluginShopify = require("eleventy-plugin-shopify");
 
 require("dotenv").config();
 
