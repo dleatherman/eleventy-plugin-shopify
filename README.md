@@ -1,4 +1,6 @@
-# eleventy-shopify
+# eleventy-plugin-shopify
+
+[![npm version](https://badge.fury.io/js/eleventy-plugin-shopify.svg)](https://badge.fury.io/js/eleventy-plugin-shopify)
 
 Import your [Shopify](https://www.shopify.com/?ref=permalight-nyc) products, pages, and collections into [Eleventy](https://11ty.dev/) as global data.
 
@@ -40,7 +42,7 @@ _Note: This plugin currently uses a development version of Eleventy which includ
    ```text
    SHOPIFY_STORE_URL=*.myshopify.com
    SHOPIFY_ACCESS_TOKEN=
-   SHOPIFY_API_VERSION=2021-07
+   SHOPIFY_API_VERSION=2021-10
    ```
 
 ## Usage
