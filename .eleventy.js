@@ -106,7 +106,6 @@ query {
         updatedAt
         handle
         body
-        url
         seo {
           title
           description
