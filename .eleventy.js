@@ -55,7 +55,7 @@ const getAllArticles = require('./src/articles');
 const getShopifyContent = (params) => {
   return {
     shop: {
-      name: "Home Treasures"
+      name: "Site Name"
     },
     products: [
       {
