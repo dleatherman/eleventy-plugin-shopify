@@ -1,302 +1,94 @@
 const chalk = require('chalk');
-const fetch = require('node-fetch-cache');
 
-const shopQuery = `
-query {
-  shop {
-    name
-    primaryDomain {
-      url
-    }
-  }
-}
-`
+const getShopInfo = require('./src/shop');
+const getAllProducts = require('./src/products');
+const getAllCollections = require('./src/collections');
+const getAllPages = require('./src/pages');
+const getAllArticles = require('./src/articles');
 
-const productsQuery = `
-query {
-  products(first: 100, sortKey: CREATED_AT) {
-    edges {
-      node {
-        id
-        title
-        handle
-        descriptionHtml
-        productType
-        tags
-        priceRange {
-          minVariantPrice {
-            amount
-          }
-          maxVariantPrice {
-            amount
-          }
-        }
-        variants(sortKey: POSITION, first: 100) {
-          edges {
-            node {
-              id
-              title
-              selectedOptions {
-                name
-                value
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-`
+// const getShopifyContent = async (params) => {
+//   console.log(chalk.yellow.bold(`SHOPIFY:GETTING SHOP INFO`))
+//   console.log(chalk.yellow.bold(`SHOPIFY:GETTING PRODUCTS`))
+//   console.log(chalk.yellow.bold(`SHOPIFY:GETTING COLLECTIONS`))
+//   console.log(chalk.yellow.bold(`SHOPIFY:GETTING PAGES`))
+//   console.log(chalk.yellow.bold(`SHOPIFY:GETTING ARTICLES`))
 
-const collectionsQuery = `
-query {
-  collections(first:100) {
-    edges {
-      node {
-        title
-        handle
-        handle
-        descriptionHtml
-        products(first: 100) {
-          edges {
-            node {
-              id
-              title
-              handle
-              descriptionHtml
-              productType
-              tags
-              priceRange {
-                minVariantPrice {
-                  amount
-                }
-                maxVariantPrice {
-                  amount
-                }
-              }
-              variants(sortKey: POSITION, first: 100) {
-                edges {
-                  node {
-                    id
-                    title
-                    selectedOptions {
-                      name
-                      value
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-`
+//   const shop = await getShopInfo()
+//   const products = await getAllProducts()
+//   const collections = await getAllCollections()
+//   const pages = await getAllPages()
+//   const articles = await getAllArticles()
 
-const pagesQuery = `
-query {
-  pages (first:25) {
-    edges{
-      node{
-        id
-        title
-        updatedAt
-        handle
-        body
-        seo {
-          title
-          description
-        }
-      }
-    }
-  }
-}
-`
+//   // Do some sort of mapping to add product data to collections
 
-const articlesQuery = `
-query {
-  articles(first:100) {
-    edges {
-      node {
-        id
-        handle
-        title
-        publishedAt
-        contentHtml
-        tags
-        image {
-          originalSrc
-          altText
-        }
-        publishedAt
-        seo {
-          title
-          description
-        }
-      }
-    }
-  }
-}
-`
+//   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${shop.name.toUpperCase()} INFO`))
+//   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${products.length} PRODUCT${products.length > 1 || products.length == 0 ? 'S' : ''}`))
+//   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${collections.length} COLLECTIONS`))
+//   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${pages.length} PAGE${pages.length > 1 || pages.length == 0 ? 'S' : ''}`))
+//   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${articles.length} ARTICLE${articles.length > 1 || articles.length == 0 ? 'S' : ''}`))
 
-const getShopInfo = async ({ url, key, version, shopQuery }) => {
+//   console.log(chalk.yellow.bold(`SHOPIFY:MAPPING PRODUCTS TO COLLECTIONS`))
 
-  console.log(chalk.yellow.bold('SHOPIFY:GETTING SHOP INFO'))
+//   collections.map(collection => {
+//     if (collection.products.length > 0) {
+//       return collection.products.map(collectionProduct => {
+//         const foundProduct = products.find(product => {
+//           return product.id === collectionProduct.id
+//         })
+//         return foundProduct
+//       })
+//     } else {
+//       return collection
+//     }
+//   })
 
-  const endpoint = `https://${url}/api/${version}/graphql.json`
+//   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY MAPPED PRODUCTS TO COLLECTIONS`))
+//   return {
+//     shop: shop,
+//     products: products,
+//     collections: collections,
+//     pages: pages,
+//     articles: articles,
+//   };
+// };
 
-  const response = await fetch(endpoint, {
-    method: 'post',
-    body: shopQuery,
-    headers: {
-      'X-Shopify-Storefront-Access-Token': key,
-      'Content-Type': 'application/graphql'
-    },
-  })
-  const res = await response.json()
-  const shop = res.data.shop
-
-  console.log(chalk.greenBright.bold(`SHOPIFY:RECIEVED SHOP INFO`))
-  return shop
-
-}
-
-const getProducts = async ({ url, key, version, productsQuery }) => {
-
-  console.log(chalk.yellow.bold('SHOPIFY:GETTING PRODUCTS'))
-
-  const endpoint = `https://${url}/api/${version}/graphql.json`
-
-  const response = await fetch(endpoint, {
-    method: 'post',
-    body: productsQuery,
-    headers: {
-      'X-Shopify-Storefront-Access-Token': key,
-      'Content-Type': 'application/graphql'
-    },
-  })
-  const res = await response.json()
-  const products = res.data.products.edges
-
-  console.log(chalk.greenBright.bold(`SHOPIFY:RECIEVED ${products.length} PRODUCTS`))
-  return products.map(product => {
-    return product.node
-  })
-}
-
-const getCollections = async ({ url, key, version, collectionsQuery }) => {
-
-  console.log(chalk.yellow.bold('SHOPIFY:GETTING COLLECTIONS'));
-
-  const endpoint = `https://${url}/api/${version}/graphql.json`;
-
-  const response = await fetch(endpoint, {
-    method: 'post',
-    body: collectionsQuery,
-    headers: {
-      'X-Shopify-Storefront-Access-Token': key,
-      'Content-Type': 'application/graphql'
-    },
-  })
-  const res = await response.json()
-  const collections = res.data.collections.edges
-
-  console.log(chalk.greenBright.bold(`SHOPIFY:RECIEVED ${collections.length} COLLECTIONS`))
-
-  return res.data.collections.edges.map(node => {
-    if (!node.node.products) {
-      return node.node
-    }
-    const products = node.node.products.edges.map(product => {
-      return product.node
-    })
-    node.node.products = products
-    return node.node
-  })
-}
-
-const getPages = async ({ url, key, version, pagesQuery }) => {
-
-  console.log(chalk.yellow.bold('SHOPIFY:GETTING PAGES'))
-
-  const endpoint = `https://${url}/api/${version}/graphql.json`
-
-  const response = await fetch(endpoint, {
-    method: 'post',
-    body: pagesQuery,
-    headers: {
-      'X-Shopify-Storefront-Access-Token': key,
-      'Content-Type': 'application/graphql'
-    },
-  })
-  const res = await response.json()
-  const pages = res.data.pages.edges
-
-  console.log(chalk.greenBright.bold(`SHOPIFY:RECIEVED ${pages.length} PAGES`))
-
-  return pages.map(page => {
-    return page.node
-  })
-}
-
-const getArticles = async ({ url, key, version, articlesQuery }) => {
-  console.log(chalk.yellow.bold('SHOPIFY:GETTING ARTICLES'));
-
-  const endpoint = `https://${url}/api/${version}/graphql.json`;
-
-  const response = await fetch(endpoint, {
-    method: 'post',
-    body: articlesQuery,
-    headers: {
-      'X-Shopify-Storefront-Access-Token': key,
-      'Content-Type': 'application/graphql'
-    },
-  })
-  const res = await response.json()
-  const articles = res.data.articles.edges
-
-  console.log(chalk.greenBright.bold(`SHOPIFY:RECEIVED ${articles.length} ARTICLES`))
-
-  return articles.map(article => {
-    return article.node
-  })
-
-}
-
-const getContent = async (params) => {
+const getShopifyContent = (params) => {
   return {
-    shop: await getShopInfo(params),
-    products: await getProducts(params),
-    collections: await getCollections(params),
-    pages: await getPages(params),
-    articles: await getArticles(params),
-  };
-};
+    shop: {
+      name: "Home Treasures"
+    },
+    products: [
+      {
+        id: 1,
+        title: 'Test Product',
+        handle: 'test-product',
+      }
+    ],
+    collections: [
+      {
+        id: 1,
+        title: 'Test Collection',
+        handle: 'test-collection',
+        products: [
+          {
+            id: 1,
+            title: 'Test Product',
+            handle: 'test-product',
+          }
+        ]
+      }
+    ],
+    articles: [],
+    pages: []
+  }
+}
 
 module.exports = (
-  eleventyConfig,
-  options = {
-    url,
-    key,
-    version,
-  }
+  eleventyConfig
 ) => {
   eleventyConfig.addGlobalData(
     "shopify",
-    async () =>
-      await getContent({
-        url: options.url,
-        key: options.key,
-        version: options.version,
-        shopQuery: options.shopQuery ? options.shopQuery : shopQuery,
-        productsQuery: options.productsQuery ? options.productsQuery : productsQuery,
-        collectionsQuery: options.collectionsQuery ? options.collectionsQuery : collectionsQuery,
-        pagesQuery: options.pagesQuery ? options.pagesQuery : pagesQuery,
-        articlesQuery: options.articlesQuery ? options.articlesQuery : articlesQuery,
-      })
+    getShopifyContent()
   );
 
   eleventyConfig.addFilter('formatCurrency', price => {

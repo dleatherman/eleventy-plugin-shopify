@@ -6,7 +6,7 @@ pagination:
   data: shopify.collections
   size: 1
   alias: collection
-permalink: "/{{ collection.handle }}/"
+permalink: "/collections/{{ collection.handle }}/"
 ---
 
 <h1>{{ collection.title }}</h1>
@@ -20,7 +20,7 @@ permalink: "/{{ collection.handle }}/"
 {% if collection.products.length > 0 %}
 <ul>
   {%- for product in collection.products %}
-    <li><a href="/{{ product.handle }}/">{{ product.title }}</a></li>
+    <li><a href="/products/{{ product.handle }}/">{{ product.title }}</a></li>
   {%- endfor %}
 </ul>
 {% endif %}
