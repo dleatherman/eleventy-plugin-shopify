@@ -6,96 +6,60 @@ const getAllCollections = require('./src/collections');
 const getAllPages = require('./src/pages');
 const getAllArticles = require('./src/articles');
 
-// const getShopifyContent = async (params) => {
-//   console.log(chalk.yellow.bold(`SHOPIFY:GETTING SHOP INFO`))
-//   console.log(chalk.yellow.bold(`SHOPIFY:GETTING PRODUCTS`))
-//   console.log(chalk.yellow.bold(`SHOPIFY:GETTING COLLECTIONS`))
-//   console.log(chalk.yellow.bold(`SHOPIFY:GETTING PAGES`))
-//   console.log(chalk.yellow.bold(`SHOPIFY:GETTING ARTICLES`))
+const config = require('./config')
 
-//   const shop = await getShopInfo()
-//   const products = await getAllProducts()
-//   const collections = await getAllCollections()
-//   const pages = await getAllPages()
-//   const articles = await getAllArticles()
+const getShopifyContent = async (config) => {
+  // CHECK CONFIG VALIDATION
 
-//   // Do some sort of mapping to add product data to collections
+  console.log(chalk.yellow.bold(`SHOPIFY:GETTING SHOP INFO`))
+  // console.log(chalk.yellow.bold(`SHOPIFY:GETTING PRODUCTS`))
+  // console.log(chalk.yellow.bold(`SHOPIFY:GETTING COLLECTIONS`))
+  console.log(chalk.yellow.bold(`SHOPIFY:GETTING PAGES`))
+  // console.log(chalk.yellow.bold(`SHOPIFY:GETTING ARTICLES`))
 
-//   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${shop.name.toUpperCase()} INFO`))
-//   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${products.length} PRODUCT${products.length > 1 || products.length == 0 ? 'S' : ''}`))
-//   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${collections.length} COLLECTIONS`))
-//   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${pages.length} PAGE${pages.length > 1 || pages.length == 0 ? 'S' : ''}`))
-//   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${articles.length} ARTICLE${articles.length > 1 || articles.length == 0 ? 'S' : ''}`))
+  const shop = await getShopInfo()
+  // const products = await getAllProducts()
+  // const collections = await getAllCollections()
+  const pages = await getAllPages()
+  // const articles = await getAllArticles()
 
-//   console.log(chalk.yellow.bold(`SHOPIFY:MAPPING PRODUCTS TO COLLECTIONS`))
+  console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${shop.name.toUpperCase()} INFO`))
+  // console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${products.length} PRODUCT${products.length > 1 || products.length == 0 ? 'S' : ''}`))
+  // console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${collections.length} COLLECTIONS`))
+  console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${pages.length} PAGE${pages.length > 1 || pages.length == 0 ? 'S' : ''}`))
+  // console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${articles.length} ARTICLE${articles.length > 1 || articles.length == 0 ? 'S' : ''}`))
 
-//   collections.map(collection => {
-//     if (collection.products.length > 0) {
-//       return collection.products.map(collectionProduct => {
-//         const foundProduct = products.find(product => {
-//           return product.id === collectionProduct.id
-//         })
-//         return foundProduct
-//       })
-//     } else {
-//       return collection
-//     }
-//   })
+  // console.log(chalk.yellow.bold(`SHOPIFY:MAPPING PRODUCTS TO COLLECTIONS`))
 
-//   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY MAPPED PRODUCTS TO COLLECTIONS`))
-//   return {
-//     shop: shop,
-//     products: products,
-//     collections: collections,
-//     pages: pages,
-//     articles: articles,
-//   };
-// };
+  // collections.map(collection => {
+  //   if (collection.products.length > 0) {
+  //     return collection.products.map(collectionProduct => {
+  //       const foundProduct = products.find(product => {
+  //         return product.id === collectionProduct.id
+  //       })
+  //       return foundProduct
+  //     })
+  //   } else {
+  //     return collection
+  //   }
+  // })
 
-const getShopifyContent = (params) => {
+  // console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY MAPPED PRODUCTS TO COLLECTIONS`))
+
   return {
-    shop: {
-      name: "Site Name"
-    },
-    products: [
-      {
-        id: 1,
-        title: 'Test Product',
-        handle: 'test-product',
-      }
-    ],
-    collections: [
-      {
-        id: 1,
-        title: 'Test Collection',
-        handle: 'test-collection',
-        products: [
-          {
-            id: 1,
-            title: 'Test Product',
-            handle: 'test-product',
-          }
-        ]
-      }
-    ],
-    articles: [],
-    pages: []
-  }
-}
+    shop: shop,
+    // products: products,
+    // collections: collections,
+    pages: pages,
+    // articles: articles,
+  };
+};
 
 module.exports = (
   eleventyConfig
 ) => {
   eleventyConfig.addGlobalData(
-    "shopify",
-    getShopifyContent()
+    "shopify", async () => await getShopifyContent(config ? config : {})
   );
 
-  eleventyConfig.addFilter('formatCurrency', price => {
-    return `$${Number.parseFloat(price).toFixed(2)}`;
-  });
-
-  eleventyConfig.addFilter('decodeId', id => {
-    return parseInt(atob(id).split('/').pop())
-  })
 };

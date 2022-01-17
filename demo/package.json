@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "@11ty/eleventy": "^1.0.0",
-    "dotenv": "^8.2.0",
+    "dotenv": "^10.0.0",
     "eleventy-plugin-shopify": "^0.0.1"
   }
 }

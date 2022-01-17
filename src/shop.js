@@ -1,4 +1,4 @@
-const fetch = require('node-fetch-cache')
+const fetch = require('node-fetch-cache');
 
 const config = require('../config')
 const { shopQuery } = require('../config/queries')

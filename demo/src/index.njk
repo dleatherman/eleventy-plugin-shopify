@@ -16,25 +16,21 @@ title: Eleventy Shopify
 <h2>Collections</h2>
 <ul>
   {% for collection in shopify.collections %}
-    <li><a href="/collections/{{ collection.handle }}/">{{ collection.title }}</a></li>
+    <li><a href="/{{ collection.handle }}/">{{ collection.title }}</a></li>
   {% endfor %}
 </ul>
 {% endif %}
 
-{% if shopify.pages.length > 0 %}
 <h2>Pages</h2>
 <ul>
   {% for p in shopify.pages %}
     <li><a href="/pages/{{ p.handle }}/">{{ p.title }}</a></li>
   {% endfor %}
 </ul>
-{% endif %}
 
-{% if shopify.articles.length > 0 %}
 <h2>Articles</h2>
 <ul>
   {% for article in shopify.articles %}
-    <li><a href="/blog/{{ article.handle }}/">{{ article.title }}</a></li>
+    <li><a href="/{{ article.handle }}/">{{ article.title }}</a></li>
   {% endfor %}
 </ul>
-{% endif %}

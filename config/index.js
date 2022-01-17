@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const { SHOPIFY_STORE_URL, SHOPIFY_ACCESS_TOKEN, SHOPIFY_API_VERSION } = process.env;
 
-const options = {
+const config = {
   url: SHOPIFY_STORE_URL,
   key: SHOPIFY_ACCESS_TOKEN,
   version: SHOPIFY_API_VERSION,
@@ -13,4 +13,4 @@ const options = {
   },
 }
 
-module.exports = options;
+module.exports = config;
