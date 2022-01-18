@@ -1,5 +1,5 @@
 {
-  "name": "eleventy-plugin-shopify",
+  "name": "@dleatherman/eleventy-plugin-shopify",
   "version": "0.0.4",
   "description": "An eleventy plugin to pull in Shopify Data",
   "main": ".eleventy.js",
