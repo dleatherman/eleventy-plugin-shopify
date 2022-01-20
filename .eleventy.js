@@ -61,5 +61,4 @@ module.exports = (
   eleventyConfig.addGlobalData(
     "shopify", async () => await getShopifyContent(config ? config : {})
   );
-
 };
