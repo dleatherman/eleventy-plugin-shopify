@@ -29,7 +29,7 @@
     "node-fetch-cache": "^3.0.3"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.0",
+    "@11ty/eleventy": "^2.0.0-canary.3",
     "dotenv": "^10.0.0"
   }
 }
