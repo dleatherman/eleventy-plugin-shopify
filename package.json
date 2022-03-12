@@ -1,6 +1,6 @@
 {
-  "name": "eleventy-plugin-shopify",
-  "version": "0.0.4",
+  "name": "@dleatherman/eleventy-plugin-shopify",
+  "version": "0.0.5",
   "description": "An eleventy plugin to pull in Shopify Data",
   "main": ".eleventy.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "node-fetch-cache": "^3.0.3"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.0",
+    "@11ty/eleventy": "^1.0.1-canary.3",
     "dotenv": "^10.0.0"
   }
 }

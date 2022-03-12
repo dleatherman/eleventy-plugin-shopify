@@ -12,4 +12,10 @@ module.exports = (eleventyConfig) => {
     key: SHOPIFY_ACCESS_TOKEN,
     version: SHOPIFY_API_VERSION,
   });
+  return {
+    htmlTemplateEngine: 'njk',
+    dir: {
+      input: 'src'
+    },
+  }
 };

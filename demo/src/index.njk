@@ -3,27 +3,31 @@ layout: base.njk
 title: Eleventy Shopify
 ---
 
+{% if shopify.products.length > 0 %}
 <h2>Products</h2>
 <ul>
   {% for product in shopify.products %}
-    <li><a href="/{{ product.handle }}/">{{ product.title }}</a></li>
+    <li><a href="/products/{{ product.handle }}/">{{ product.title }}</a></li>
   {% endfor %}
 </ul>
+{% endif %}
 
+{% if shopify.collections.length > 0 %}
 <h2>Collections</h2>
 <ul>
   {% for collection in shopify.collections %}
     <li><a href="/{{ collection.handle }}/">{{ collection.title }}</a></li>
   {% endfor %}
 </ul>
-  
+{% endif %}
+
 <h2>Pages</h2>
 <ul>
   {% for p in shopify.pages %}
-    <li><a href="/{{ p.handle }}/">{{ p.title }}</a></li>
+    <li><a href="/pages/{{ p.handle }}/">{{ p.title }}</a></li>
   {% endfor %}
 </ul>
-  
+
 <h2>Articles</h2>
 <ul>
   {% for article in shopify.articles %}
