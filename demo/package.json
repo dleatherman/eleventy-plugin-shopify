@@ -6,6 +6,6 @@
   "dependencies": {
     "@11ty/eleventy": "^1.0.1-canary.3",
     "dotenv": "^10.0.0",
-    "eleventy-plugin-shopify": "^0.0.1"
+    "eleventy-plugin-shopify": "^0.0.5"
   }
 }
