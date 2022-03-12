@@ -1,6 +1,6 @@
 {
   "name": "@dleatherman/eleventy-plugin-shopify",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "An eleventy plugin to pull in Shopify Data",
   "main": ".eleventy.js",
   "scripts": {
