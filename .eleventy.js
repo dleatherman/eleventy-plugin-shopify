@@ -6,10 +6,13 @@ const getAllCollections = require('./src/collections');
 const getAllPages = require('./src/pages');
 const getAllArticles = require('./src/articles');
 
-const config = require('./config')
+const defaultConfig = require("./config");
 
 const getShopifyContent = async (config) => {
-  // CHECK CONFIG VALIDATION
+  // defaultConfig is a standard config file with the default queries assigned
+  // anything that the user changes overwrites the default config
+  // the result from this overwriting is the below shopifyConfig variable
+  const shopifyConfig = Object.assign(defaultConfig, config);
 
   console.log(chalk.yellow.bold(`SHOPIFY:GETTING SHOP INFO`))
   console.log(chalk.yellow.bold(`SHOPIFY:GETTING PRODUCTS`))
@@ -17,11 +20,11 @@ const getShopifyContent = async (config) => {
   console.log(chalk.yellow.bold(`SHOPIFY:GETTING PAGES`))
   console.log(chalk.yellow.bold(`SHOPIFY:GETTING ARTICLES`))
 
-  const shop = await getShopInfo()
-  const products = await getAllProducts()
-  const collections = await getAllCollections()
-  const pages = await getAllPages()
-  const articles = await getAllArticles()
+  const shop = await getShopInfo(shopifyConfig.shopQuery);
+  const products = await getAllProducts(shopifyConfig.productsQuery);
+  const collections = await getAllCollections(shopifyConfig.collectionsQuery);
+  const pages = await getAllPages(shopifyConfig.pagesQuery);
+  const articles = await getAllArticles(shopifyConfig.articlesQuery);
 
   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${shop.name.toUpperCase()} INFO`))
   console.log(chalk.greenBright.bold(`SHOPIFY:SUCCESSFULLY RETRIEVED ${products.length} PRODUCT${products.length > 1 || products.length == 0 ? 'S' : ''}`))
@@ -55,10 +58,9 @@ const getShopifyContent = async (config) => {
   };
 };
 
-module.exports = (
-  eleventyConfig
-) => {
+module.exports = (eleventyConfig, pluginConfig) => {
   eleventyConfig.addGlobalData(
-    "shopify", async () => await getShopifyContent(config ? config : {})
+    "shopify",
+    async () => await getShopifyContent(pluginConfig || {})
   );
 };

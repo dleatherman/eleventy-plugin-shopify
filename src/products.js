@@ -23,11 +23,11 @@ async function getProducts(query = productsQuery, cursor = null, previousProduct
   }
 }
 
-async function getAllProducts() {
-  const products = await getProducts()
-  return allProducts.map(product => {
-    return product.node
-  })
+async function getAllProducts(query) {
+  const products = await getProducts(query);
+  return allProducts.map((product) => {
+    return product.node;
+  });
 }
 
 module.exports = getAllProducts

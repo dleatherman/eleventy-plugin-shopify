@@ -23,11 +23,11 @@ async function getPages(query = pagesQuery, cursor = null, previousPages = []) {
   }
 }
 
-async function getAllPages() {
-  let pages = await getPages()
-  return allPages.map(page => {
-    return page.node
-  })
+async function getAllPages(query) {
+  let pages = await getPages(query);
+  return allPages.map((page) => {
+    return page.node;
+  });
 }
 
 module.exports = getAllPages

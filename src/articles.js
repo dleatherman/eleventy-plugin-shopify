@@ -23,11 +23,11 @@ async function getArticles(query = articlesQuery, cursor = null, previousArticle
   }
 }
 
-async function getAllArticles() {
-  const articles = await getArticles()
-  return allArticles.map(article => {
-    return article.node
-  })
+async function getAllArticles(query) {
+  const articles = await getArticles(query);
+  return allArticles.map((article) => {
+    return article.node;
+  });
 }
 
 module.exports = getAllArticles

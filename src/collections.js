@@ -23,9 +23,9 @@ async function getCollections(query = collectionsQuery, cursor = null, previousC
   }
 }
 
-async function getAllCollections() {
-  let collections = await getCollections()
-  return allCollections.map(collection => {
+async function getAllCollections(query) {
+  let collections = await getCollections(query);
+  return allCollections.map((collection) => {
     // collection.node.products = collection.node.products.edges.map(product => {
     //   return product.node
     // })
