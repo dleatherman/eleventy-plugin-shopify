@@ -4,7 +4,7 @@
     "build": "eleventy"
   },
   "dependencies": {
-    "@11ty/eleventy": "^1.0.1-canary.3",
+    "@11ty/eleventy": "^2.0.0",
     "dotenv": "^10.0.0",
     "eleventy-plugin-shopify": "^0.0.5"
   }
