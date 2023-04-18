@@ -3,11 +3,11 @@ const fetch = require('node-fetch-cache')
 const config = require('../config')
 const { collectionsQuery } = require('../config/queries')
 
-const allCollections = []
+let allCollections = [];
 
 async function getCollections(query = collectionsQuery, cursor = null, previousCollections = []) {
   if (previousCollections.length > 0) {
-    allCollections.push(...previousCollections)
+    allCollections = [...previousCollections];
   }
   const response = await fetch(config.endpoint, {
     method: 'post',

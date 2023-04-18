@@ -3,11 +3,11 @@ const fetch = require('node-fetch-cache')
 const config = require('../config')
 const { pagesQuery } = require('../config/queries')
 
-const allPages = []
+let allPages = [];
 
 async function getPages(query = pagesQuery, cursor = null, previousPages = []) {
   if (previousPages.length > 0) {
-    allPages.push(...previousPages)
+    allPages = [...previousPages];
   }
   const response = await fetch(config.endpoint, {
     method: 'post',

@@ -17,7 +17,6 @@ const config = {
     'X-Shopify-Storefront-Access-Token': SHOPIFY_ACCESS_TOKEN,
     'Content-Type': 'application/graphql'
   },
-}
   shopQuery,
   productsQuery,
   collectionsQuery,

@@ -3,11 +3,11 @@ const fetch = require('node-fetch-cache')
 const config = require('../config')
 const { articlesQuery } = require('../config/queries')
 
-const allArticles = []
+let allArticles = [];
 
 async function getArticles(query = articlesQuery, cursor = null, previousArticles = []) {
   if (previousArticles.length > 0) {
-    allArticles.push(...previousArticles)
+    allArticles = [...previousArticles];
   }
   const response = await fetch(config.endpoint, {
     method: 'post',
