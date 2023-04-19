@@ -25,7 +25,8 @@ _Note: This plugin currently uses version 1.0.1-canary.3_
 
    require("dotenv").config();
 
-   const { SHOPIFY_STORE_URL, SHOPIFY_ACCESS_TOKEN, SHOPIFY_API_VERSION } = process.env;
+   const { SHOPIFY_STORE_URL, SHOPIFY_ACCESS_TOKEN, SHOPIFY_API_VERSION } =
+     process.env;
 
    module.exports = (eleventyConfig) => {
      eleventyConfig.addPlugin(pluginShopify, {
@@ -67,19 +68,34 @@ _Note: This plugin currently uses version 1.0.1-canary.3_
 
 2. Amend the `.eleventy.js` file within `demo` so it points to the source code in the parent directory:
 
+   #### When developing locally
+
+   ```js
+   const pluginShopify = require("../");
+   // const pluginShopify = require("eleventy-plugin-shopify");
+   ```
+
+   #### When using npm file
+
    ```js
    // const pluginShopify = require("../");
    const pluginShopify = require("eleventy-plugin-shopify");
    ```
 
-3. Install the demo dependencies:
+3. Install development dependencies (in root):
+
+   ```text
+   npm install
+   ```
+
+4. Install the demo dependencies (in ./demo):
 
    ```text
    cd demo
    npm install
    ```
 
-4. Run the demo locally:
+5. Run the demo locally:
    ```text
    npm run dev
    ```

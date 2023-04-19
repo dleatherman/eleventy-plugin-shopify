@@ -3,11 +3,11 @@ const fetch = require('node-fetch-cache')
 const config = require('../config')
 const { articlesQuery } = require('../config/queries')
 
-const allArticles = []
+let allArticles = [];
 
 async function getArticles(query = articlesQuery, cursor = null, previousArticles = []) {
   if (previousArticles.length > 0) {
-    allArticles.push(...previousArticles)
+    allArticles = [...previousArticles];
   }
   const response = await fetch(config.endpoint, {
     method: 'post',
@@ -23,11 +23,11 @@ async function getArticles(query = articlesQuery, cursor = null, previousArticle
   }
 }
 
-async function getAllArticles() {
-  const articles = await getArticles()
-  return allArticles.map(article => {
-    return article.node
-  })
+async function getAllArticles(query) {
+  const articles = await getArticles(query);
+  return allArticles.map((article) => {
+    return article.node;
+  });
 }
 
 module.exports = getAllArticles
