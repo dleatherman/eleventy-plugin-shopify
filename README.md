@@ -4,8 +4,6 @@
 
 Import your [Shopify](https://www.shopify.com/?ref=permalight-nyc) products, pages, and collections into [Eleventy](https://11ty.dev/) as global data.
 
-_Note: This plugin currently uses version 1.0.1-canary.3_
-
 [View the demo site](https://eleventy-plugin-shopify-demo.netlify.app/)
 
 ## Installation
